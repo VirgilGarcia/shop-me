@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import TaskList from './components/TaskList';
-import AddTaskForm from './components/AddTaskForm';
+import ProductList from './components/ProductList';
+import AddProductForm from './components/AddProductForm';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
+    const savedProducts = localStorage.getItem('products');
+    if (savedProducts) {
+      setProducts(JSON.parse(savedProducts));
     }
   }, []);
 
-  const addTask = (taskName) => {
-    const newTask = { id: Date.now(), name: taskName };
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  const addProduct = (product) => {
+    const newProduct = { id: Date.now(), name: product.name, quantity: product.quantity };
+    const updatedProducts = [...products, newProduct];
+    setProducts(updatedProducts);
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
   };
 
-  const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  const deleteProduct = (productId) => {
+    const updatedProducts = products.filter((product) => product.id !== productId);
+    setProducts(updatedProducts);
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
   };
 
   return (
     <div className="App">
       <h1>Shop<span>Me!</span></h1>
-      <AddTaskForm onAddTask={addTask} />
-      <TaskList tasks={tasks} onDeleteTask={deleteTask} />
+      <AddProductForm onAddProduct={addProduct} />
+      <ProductList products={products} onDeleteProduct={deleteProduct} />
       <footer>© 2023 Virgil Garcia</footer>
     </div>
   );
